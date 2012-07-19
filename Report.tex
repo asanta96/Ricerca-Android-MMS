@@ -1,4 +1,4 @@
-%% LyX 2.0.2 created this file.  For more info, see http://www.lyx.org/.
+%% LyX 2.0.3 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[10pt,a4paper]{article}
 \usepackage[T1]{fontenc}
@@ -98,11 +98,7 @@ memory. We discuss in particular about application memory and some
 of the most used MMUs used by Android OS.
 \end{abstract}
 \vspace{4ex}
- % ASSIGNMENT:
-Analyze and document how the Android specific memory management systems work and integrate with hardware resources. In particular, describe how application and hardware resources are managed (OOM killer, PMEM and HWMEM drivers).
-Project Goals: Understanding the Android memory management Required skills: Linux kernel and UNIX process management basics Peoples: This project is suited for one student or a group with maximum two people.
-Project Status: Working on: anyone
-NOTE: still available for other students/groups
+ 
 \begin{multicols}{2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -122,7 +118,7 @@ dex-code (Dalvik Executable), which is usually translated from Java
 bytecode. Figure \ref{Android distribution diffusion} shows the actual\cite{WIKI}
 distribution of Android version between devices with this kernel:
 
-\includegraphics[scale=0.3]{\string"/home/coach/Dropbox/RTOS/roba su github/Android_chart\string".png}
+\includegraphics[scale=0.3,bb = 0 0 200 100, draft, type=eps]{C:/home/coach/Dropbox/RTOS/roba su github/Android_chart.png}
 
 \label{Android distribution diffusion}
 
@@ -132,7 +128,7 @@ We can notice that now the common kernel distributions still use Linux
 Figure \ref{Android structure} shows Android System Architecture
 schema \cite{WIKI}.
 
-\includegraphics[scale=0.3]{\string"/home/coach/Dropbox/RTOS/roba su github/System-architecture\string".jpg}
+\includegraphics[scale=0.3,bb = 0 0 200 100, draft, type=eps]{C:/home/coach/Dropbox/RTOS/roba su github/System-architecture.jpg}
 
 \label{Android structure}
 
@@ -150,6 +146,36 @@ mission is to free memory when the system run Out of Memory (OOM).
 % - finire ION con gli sviluppi futuri: integrazione CMA con ION.
 % - TUTTA la parte su OOM killer
 % 
+
+
+\subsection{Dalvik Virtual Machine}
+
+Dalvik is the VM in which Android applications are run. Is structured
+to work with devices with limited resources:
+\begin{itemize}
+\item Relatively slow CPU 
+\item Small amount of RAM 
+\item No swap space 
+\end{itemize}
+This VM executes Dalvik bytecode, which is compiled from programs
+written in the Java. But note that Dalvik VM is not a Java VM (JVM).
+
+Every Android application runs in its own process, with its own instance
+of the Dalvik virtual machine, in this way the applications work in
+an isolated manner and do not compete with each other. 
+
+Dalvik was written so that a device can run multiple VMs efficiently.
+The Dalvik VM executes code in the Dalvik Executable (.dex) format
+which is optimized for minimal memory footprint. The VM is register-based,
+and runs classes compiled by a Java language compiler that have been
+transformed into the .dex format by the included \textquotedbl{}dx\textquotedbl{}
+tool. 
+
+An uncompressed .dex file is typically a few percent smaller in size
+than a compressed .jar (Java Archive) derived from the same .class
+files. 
+
+\includegraphics{C:/Users/Tania/Desktop/dalvik}
 
 
 \subsection{Low level management and integration with HW resources}
